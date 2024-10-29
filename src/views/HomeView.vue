@@ -1,3 +1,33 @@
+<template>
+<div :class="['home-container', { 'results-view': videos.length > 0 }]">
+    <div class="search-section">
+        <div v-if="videos.length === 0">
+            <h1 class="welcome-text green">Welcome!</h1>
+            <h3>This project can search and play videos from TikTok.</h3>
+        </div>
+        <SearchBar @search="handleSearch" />
+    </div>
+
+    <div v-if="loading && videos.length === 0" class="loading-view">
+        <div class="spinner"></div>
+    </div>
+
+    <VideoList v-else :videos="videos" @play="fetchVideoUrl" @loadMore="loadMoreVideos" :isFetchingMore="isFetchingMore" />
+
+    <!-- Full-Screen Loading Overlay for Video Fetching -->
+    <div v-if="fetchingVideo" class="overlay-loading">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Video Player Overlay -->
+    <div v-if="selectedVideoUrl" class="video-player-overlay" @click.self="closePlayer">
+        <VideoPlayer :videoUrl="selectedVideoUrl" />
+    </div>
+</div>
+</template>
+
+  
+  
 <script>
 import SearchBar from "../components/SearchBar.vue";
 import VideoList from "../components/VideoList.vue";
@@ -19,6 +49,7 @@ export default {
             currentPage: 1,
             isFetchingMore: false,
             hasMore: true,
+            fetchingVideo: false, // New state for showing loading overlay when fetching video
         };
     },
     methods: {
@@ -60,12 +91,15 @@ export default {
             }
         },
         async fetchVideoUrl(videoPageUrl) {
+            this.fetchingVideo = true; // Show loading overlay
             try {
                 const encodedUrl = encodeURIComponent(videoPageUrl);
                 const response = await axios.get(`http://localhost:8080/get-video-url?url=${encodedUrl}`);
                 this.selectedVideoUrl = response.data.videoUrl;
             } catch (error) {
                 console.error("Error fetching video URL:", error);
+            } finally {
+                this.fetchingVideo = false; // Hide loading overlay
             }
         },
         closePlayer() {
@@ -74,29 +108,8 @@ export default {
     }
 };
 </script>
-
-<template>
-<div :class="['home-container', { 'results-view': videos.length > 0 }]">
-    <div class="search-section">
-        <div v-if="videos.length === 0">
-            <h1 class="welcome-text green">Welcome!</h1>
-            <h3>This project can search and play videos from TikTok.</h3>
-        </div>
-        <SearchBar @search="handleSearch" />
-    </div>
-
-    <div v-if="loading && videos.length === 0" class="loading-view">
-        <div class="spinner"></div>
-    </div>
-
-    <VideoList v-else :videos="videos" @play="fetchVideoUrl" @loadMore="loadMoreVideos" :isFetchingMore="isFetchingMore" />
-
-    <div v-if="selectedVideoUrl" class="video-player-overlay" @click.self="closePlayer">
-        <VideoPlayer :videoUrl="selectedVideoUrl" />
-    </div>
-</div>
-</template>
-
+  
+  
 <style scoped>
 /* Centered Container */
 .home-container {
