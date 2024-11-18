@@ -14,7 +14,10 @@ export default {
             this.$emit("play", videoUrl);
         },
         onScroll(event) {
-            const bottomReached = event.target.scrollTop + event.target.clientHeight >= event.target.scrollHeight - 10;
+            const target = event.target;
+            const bottomReached =
+                target.scrollTop + target.clientHeight >= target.scrollHeight - 10;
+
             if (bottomReached && !this.isFetchingMore) {
                 this.$emit("loadMore");
             }
@@ -32,18 +35,15 @@ export default {
 </div>
 </template>
 
-    
-    
 <style scoped>
 .video-list {
-    display: grid;
-    gap: 20px;
-    padding: 20px;
-    max-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    max-height: 90vh;
     overflow-y: auto;
-
-    /* Responsive grid */
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    align-items: center;
+    /* Center items horizontally */
 }
 
 .loading-view {

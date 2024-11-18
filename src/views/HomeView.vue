@@ -60,17 +60,12 @@ export default {
 
             try {
                 const backendUrl = import.meta.env.VITE_APP_BACKEND_URL;
-                console.log(import.meta.env);
-                console.log(backendUrl);
-                let url =  `${backendUrl}/search/${query}?page=${page}`;
-                console.log(url);
                 const response = await axios.get(`${backendUrl}/search/${query}?page=${page}`);
-                // const newVideos = response.data.videos;
 
                 // Safeguard against undefined `response.data.videos`
                 const newVideos = response.data.videos || [];
 
-                if (newVideos.length < 6) {
+                if (newVideos.length < 4) {
                     this.hasMore = false;
                 }
 
@@ -87,12 +82,14 @@ export default {
             } finally {
                 this.loading = false;
                 this.isFetchingMore = false;
+                this.fetchingVideo = false;
             }
         },
         handleSearch(query) {
             this.searchQuery = query;
             this.currentPage = 1;
             this.hasMore = true;
+            this.fetchingVideo = true;
             this.fetchVideos(this.searchQuery, this.currentPage);
         },
         loadMoreVideos() {
@@ -152,17 +149,6 @@ export default {
 .results-view .search-section {
     margin-top: 20px;
     margin-bottom: 10px;
-}
-
-.video-list {
-    display: grid;
-    gap: 20px;
-    padding: 20px;
-    max-height: 80vh;
-    overflow-y: auto;
-
-    /* Three columns for large screens */
-    grid-template-columns: repeat(3, 1fr);
 }
 
 /* Two columns for medium screens */

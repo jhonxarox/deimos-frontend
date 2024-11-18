@@ -30,6 +30,16 @@ export default {
     background-color: #333;
     color: #fff;
     position: relative;
+
+    width: 100%; /* Keep videos centered and at a reasonable width */
+    max-width: 640px; /* Optional: Limit maximum width for larger screens */
+    aspect-ratio: 9 / 16; /* Maintain 16:9 aspect ratio */
+    overflow: hidden; /* Clip overflowing content */
+    border-radius: 10px; /* Add rounded corners if desired */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Optional: Add shadow for better visuals */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .video-item:hover {
@@ -38,9 +48,8 @@ export default {
 
 .video-item img {
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
-    display: block;
 }
 
 .video-details {
