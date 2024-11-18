@@ -59,7 +59,7 @@ export default {
             this.isFetchingMore = page > 1;
 
             try {
-                const response = await axios.get(`http://localhost:8080/search/${query}?page=${page}`);
+                const response = await axios.get(`https://deimos-backend.onrender.com/search/${query}?page=${page}`);
                 const newVideos = response.data.videos;
 
                 if (newVideos.length < 6) {
@@ -94,7 +94,7 @@ export default {
             this.fetchingVideo = true; // Show loading overlay
             try {
                 const encodedUrl = encodeURIComponent(videoPageUrl);
-                const response = await axios.get(`http://localhost:8080/get-video-url?url=${encodedUrl}`);
+                const response = await axios.get(`https://deimos-backend.onrender.com/get-video-url?url=${encodedUrl}`);
                 this.selectedVideoUrl = response.data.videoUrl;
             } catch (error) {
                 console.error("Error fetching video URL:", error);

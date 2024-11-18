@@ -6,7 +6,7 @@ export default {
     computed: {
         proxiedVideoUrl() {
             // Use the proxy endpoint in your backend to serve the video
-            return `http://localhost:8080/proxy-video?url=${encodeURIComponent(this.videoUrl)}`;
+            return `https://deimos-backend.onrender.com/proxy-video?url=${encodeURIComponent(this.videoUrl)}`;
         },
     },
 };
