@@ -5,6 +5,7 @@ export default {
     },
     computed: {
         proxiedVideoUrl() {
+            const backendUrl = import.meta.env.VITE_APP_BACKEND_URL;
             // Use the proxy endpoint in your backend to serve the video
             return `${backendUrl}/proxy-video?url=${encodeURIComponent(this.videoUrl)}`;
         },

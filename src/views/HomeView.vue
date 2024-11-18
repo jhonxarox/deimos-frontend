@@ -59,8 +59,16 @@ export default {
             this.isFetchingMore = page > 1;
 
             try {
+                const backendUrl = import.meta.env.VITE_APP_BACKEND_URL;
+                console.log(import.meta.env);
+                console.log(backendUrl);
+                let url =  `${backendUrl}/search/${query}?page=${page}`;
+                console.log(url);
                 const response = await axios.get(`${backendUrl}/search/${query}?page=${page}`);
-                const newVideos = response.data.videos;
+                // const newVideos = response.data.videos;
+
+                // Safeguard against undefined `response.data.videos`
+                const newVideos = response.data.videos || [];
 
                 if (newVideos.length < 6) {
                     this.hasMore = false;
@@ -74,6 +82,8 @@ export default {
                 this.currentPage = page;
             } catch (error) {
                 console.error("Error fetching videos:", error);
+                // Provide a fallback if an error occurs
+                this.hasMore = false;
             } finally {
                 this.loading = false;
                 this.isFetchingMore = false;
@@ -93,6 +103,7 @@ export default {
         async fetchVideoUrl(videoPageUrl) {
             this.fetchingVideo = true; // Show loading overlay
             try {
+                const backendUrl = import.meta.env.VITE_APP_BACKEND_URL;
                 const encodedUrl = encodeURIComponent(videoPageUrl);
                 const response = await axios.get(`${backendUrl}/get-video-url?url=${encodedUrl}`);
                 this.selectedVideoUrl = response.data.videoUrl;
