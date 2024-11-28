@@ -151,20 +151,6 @@ export default {
     margin-bottom: 10px;
 }
 
-/* Two columns for medium screens */
-@media (min-width: 768px) and (max-width: 1199px) {
-    .video-list {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-/* One column for small screens */
-@media (max-width: 767px) {
-    .video-list {
-        grid-template-columns: 1fr;
-    }
-}
-
 /* Loading Spinner */
 .loading-view {
     display: flex;

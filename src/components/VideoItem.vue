@@ -24,53 +24,50 @@ export default {
 .video-item {
     cursor: pointer;
     border: 1px solid #ddd;
-    border-radius: 8px;
+    border-radius: 10px; /* Rounded corners */
     overflow: hidden;
     transition: box-shadow 0.3s;
     background-color: #333;
     color: #fff;
-    position: relative;
 
-    width: 100%; /* Keep videos centered and at a reasonable width */
-    max-width: 640px; /* Optional: Limit maximum width for larger screens */
-    aspect-ratio: 9 / 16; /* Maintain 16:9 aspect ratio */
-    overflow: hidden; /* Clip overflowing content */
-    border-radius: 10px; /* Add rounded corners if desired */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Optional: Add shadow for better visuals */
+    /* Larger item size */
+    width: 100%;
+    height: 300px; /* Fixed height for uniformity */
+    max-width: 640px; /* Optional: Limit maximum width */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Add shadow */
     display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.video-item:hover {
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    flex-direction: column;
+    justify-content: flex-end; /* Align content at the bottom */
+    position: relative;
 }
 
 .video-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    object-fit: cover; /* Ensure video thumbnails are properly cropped */
+}
+
+.video-item:hover {
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3); /* Add hover effect */
 }
 
 .video-details {
     position: absolute;
     bottom: 0;
     width: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    /* Transparent background */
-    padding: 8px;
-    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
+    padding: 10px;
     text-align: left;
 }
 
 .caption {
-    font-size: 14px;
+    font-size: 16px; /* Slightly larger font size for readability */
     font-weight: bold;
     color: #fff;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limit to 2 lines */
+    -webkit-box-orient: vertical;
 }
 </style>

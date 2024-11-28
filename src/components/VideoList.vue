@@ -15,13 +15,14 @@ export default {
         },
         onScroll(event) {
             const target = event.target;
+
             const bottomReached =
-                target.scrollTop + target.clientHeight >= target.scrollHeight - 10;
+                Math.ceil(target.scrollTop + target.clientHeight) >= target.scrollHeight;
 
             if (bottomReached && !this.isFetchingMore) {
                 this.$emit("loadMore");
             }
-        }
+        },
     }
 };
 </script>
@@ -37,13 +38,30 @@ export default {
 
 <style scoped>
 .video-list {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    max-height: 90vh;
-    overflow-y: auto;
-    align-items: center;
-    /* Center items horizontally */
+    display: grid;
+    gap: 20px; /* Space between items */
+    overflow-y: auto; /* Enable vertical scrolling */
+    width: 100%;
+    max-width: 1200px; /* Limit maximum width for large screens */
+    height: 80vh; /* Fixed height for consistent scrolling */
+    padding: 20px;
+
+    /* Default: Single column */
+    grid-template-columns: 1fr;
+}
+
+/* Medium screens (1 column) */
+@media (min-width: 768px) {
+    .video-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Large screens (2 columns) */
+@media (min-width: 1200px) {
+    .video-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 .loading-view {
@@ -51,9 +69,7 @@ export default {
     justify-content: center;
     align-items: center;
     width: 100%;
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    margin-top: 20px;
 }
 
 .spinner {
